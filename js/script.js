@@ -51,6 +51,39 @@ const makeGuess = function(letter){
         message.innerText = "You already guessed that letter. Try again!";
     } else{
         lettersGuessed.push(letter);
+        letterPrint(letter);
         console.log(lettersGuessed);
+        printGuess(lettersGuessed);
     }
 };
+
+const letterPrint = function(print){
+    // guessedLetters.innerHTML = "";
+    const li = document.createElement("li");
+    li.innerText = print;
+    guessedLetters.append(li);
+};
+
+const printGuess = function(lettersGuessed){
+    const wordUpper = word.toUpperCase();
+    const wordArray = wordUpper.split("");
+    const revealWord = [];
+    for (const letter of wordArray){
+        if (lettersGuessed.includes(letter)){
+            revealWord.push(letter.toUpperCase());
+        } else{
+            revealWord.push("●");
+        }
+    }
+    progress.innerText = revealWord.join("");
+    winner();
+};
+
+const winner = function(){
+    if (progress.innerText === word.toUpperCase()){
+        message.classList.add("win");
+        message.innerHTML = '<p class="highlight">You guessed correct the word! Congrats!</p>';
+    }
+};
+
+
