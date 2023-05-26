@@ -7,9 +7,18 @@ const remainingSpan = document.querySelector(".remaining span");
 const message = document.querySelector(".message");
 const playAgainButton = document.querySelector(".play-again");
 
-const word = "magnolia";
+let word = "magnolia";
 const lettersGuessed = [];
-var remainingGuesses = 8;
+let remainingGuesses = 8;
+
+const getWord = async function(){
+    const res = await fetch("https://gist.githubusercontent.com/skillcrush-curriculum/7061f1d4d3d5bfe47efbfbcfe42bf57e/raw/5ffc447694486e7dea686f34a6c085ae371b43fe/words.txt");
+    const data = await res.text();
+    const wordArray = data.split("\n");
+    const randomIndex = Math.floor(Math.random()*wordArray.length);
+    word = wordArray[randomIndex].trim();
+    circleText(word);
+};
 
 const circleText = function (word) {
     const dotLetters = [];
@@ -20,7 +29,7 @@ const circleText = function (word) {
     progress.innerText = dotLetters.join("");
 };
 
-circleText(word);
+getWord();
 
 guessButton.addEventListener("click", function (e) {
     e.preventDefault();
